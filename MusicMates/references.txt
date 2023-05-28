@@ -1,0 +1,82 @@
+References for each file in the project
+
+//
+//  FirebaseController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 3/5/2023.
+//
+//  References:
+//  "How to transition from login screen to tab bar controller": https://fluffy.es/how-to-transition-from-login-screen-to-tab-bar-controller/
+
+//
+//  LoginViewController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 30/4/2023.
+//
+//  References:
+//  "Manage Users in Firebase - Get the currently signed-in user" : https://firebase.google.com/docs/auth/ios/manage-users
+//  "How to validate an e-mail address in swift?" : https://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
+
+//
+//  RegisterViewController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 30/4/2023.
+//
+// "How to validate an e-mail address in swift?" : https://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
+
+//
+//  HomeCollectionViewController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 2/5/2023.
+//
+//  References:
+//  "Swift - How to hide back button in navigation item?": https://stackoverflow.com/questions/27373812/swift-how-to-hide-back-button-in-navigation-item
+//  "Swift - How to dismiss all of view controllers to go back to root": https://stackoverflow.com/questions/47322379/swift-how-to-dismiss-all-of-view-controllers-to-go-back-to-root
+//  "Sequencing tasks with DispatchGroup": https://www.donnywals.com/sequencing-tasks-with-dispatchgroup/
+
+//
+//  SpotifyLoginViewController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 7/5/2023.
+//
+//  References:
+//  "Spotify For Developers: Web API": https://developer.spotify.com/documentation/web-api
+//  "How to add Spotify Login button to your iOS app using Swift": https://johncodeos.com/how-to-add-spotify-login-button-to-your-ios-app-using-swift/
+//  "ASWebAuthenticationSession": https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession
+//  "prefersEphemeralWebBrowserSession": https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession/3237231-prefersephemeralwebbrowsersessio
+//  "Defining a custom URL scheme for your app": https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app#
+//  "How to parse JSON using JSONSerialization": https://www.hackingwithswift.com/example-code/system/how-to-parse-json-using-jsonserialization
+
+//
+//  FriendsTableViewController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 16/5/2023.
+//
+//  References:
+//  "UITableViewCell swipe actions with Swift": https://programmingwithswift.com/uitableviewcell-swipe-actions-with-swift/
+//  "Pull to refresh functionality": https://www.javatpoint.com/ios-pull-to-refresh-functionality
+
+//
+//  DiscoverTableViewController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 17/5/2023.
+//
+//  References:
+//  "UITableViewCell swipe actions with Swift": https://programmingwithswift.com/uitableviewcell-swipe-actions-with-swift/
+//  "Pull to refresh functionality": https://www.javatpoint.com/ios-pull-to-refresh-functionality
+
+//
+//  RequestsTableViewController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 23/5/2023.
+//
+//  References:
+//  "UITableViewCell swipe actions with Swift": https://programmingwithswift.com/uitableviewcell-swipe-actions-with-swift/
