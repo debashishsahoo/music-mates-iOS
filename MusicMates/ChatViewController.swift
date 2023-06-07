@@ -5,7 +5,9 @@
 //  Created by Debashish Sahoo on 29/5/2023.
 //
 //  References:
-//  "":
+//  "MessageKit": https://messagekit.github.io
+//  "MessageKit Github": https://github.com/MessageKit/MessageKit
+//  "3 Ways to Generate Random Strings in Swift": https://www.slingacademy.com/article/ways-to-generate-random-strings-in-swift/
 
 import UIKit
 import MessageKit
@@ -108,7 +110,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                 // If chats don't exist with the other user, create a new chat with the other user
                 self.createChat()
             } else {
-                // If chats don't exist at allfor the current user, create a new chat with the other user
+                // If chats don't exist at all for the current user, create a new chat with the other user
                 self.createChat()
             }
         }

@@ -80,3 +80,14 @@ References for each file in the project
 //
 //  References:
 //  "UITableViewCell swipe actions with Swift": https://programmingwithswift.com/uitableviewcell-swipe-actions-with-swift/
+
+//
+//  ChatViewController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 29/5/2023.
+//
+//  References:
+//  "MessageKit": https://messagekit.github.io
+//  "MessageKit Github": https://github.com/MessageKit/MessageKit
+//  "3 Ways to Generate Random Strings in Swift": https://www.slingacademy.com/article/ways-to-generate-random-strings-in-swift/
