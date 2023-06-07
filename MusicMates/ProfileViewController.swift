@@ -22,10 +22,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var friendsBtn: UIButton!
     
     @IBOutlet weak var requestsBtn: UIButton!
-    
-    @IBOutlet weak var usernameLabel: UILabel!
-    
-    
+        
+
     /// Handles user logging out
     /// - Parameter sender: The log out button
     @IBAction func logOutBtnClicked(_ sender: Any) {
@@ -65,7 +63,6 @@ class ProfileViewController: UIViewController {
             self.nameLabel.text = firstName + " " + lastName
             
             let username = userData["username"] as! String
-            self.usernameLabel.text = "@ " + username
             
             let friends = userData["friends"] as! [Any]
             self.friendsBtn.setTitle(String(friends.count), for: .normal)

@@ -20,9 +20,11 @@ class DiscoverTableViewController: UITableViewController {
     var currentUserFriends: Array<DocumentReference>?
     
     let CELL_FRIEND = "friendCell"
-    
+        
     weak var databaseController: DatabaseProtocol?
     var authController: Auth?
+    
+    var mapViewController: MapViewController?
     
     let tabelRefreshControl = UIRefreshControl()
 
@@ -47,9 +49,7 @@ class DiscoverTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
-            self.fetchAllData()
-        }
+        self.fetchAllData()
     }
     
     /// Refresh table data by swiping down
@@ -210,6 +210,32 @@ class DiscoverTableViewController: UITableViewController {
         return configuration
     }
     
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mapSegue" {
+             if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
+                 let controller = segue.destination as! MapViewController
+                 
+                 let friendData = discoverFriendsList[indexPath.row].0
+                 
+                 let friendFirstName = friendData["firstname"] as! String
+                 let friendLastName = friendData["lastname"] as! String
+                 let friendName = friendFirstName + " " + friendLastName
+
+                 let friendLocation = friendData["location"] as! GeoPoint
+                 let latitude = friendLocation.latitude
+                 let longitude = friendLocation.longitude
+                 
+                 let annotation = LocationAnnotation(title: friendName, lat: latitude, long: longitude)
+                 controller.annotation = annotation
+             }
+         }
+        
+    }
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -226,7 +252,7 @@ class DiscoverTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     */
 
@@ -245,14 +271,6 @@ class DiscoverTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }

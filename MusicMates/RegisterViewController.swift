@@ -157,6 +157,7 @@ class RegisterViewController: UIViewController {
                     "favSongs": [],
                     "favArtists": [],
                     "accessToken": "",
+                    "refreshToken": "",
                     "requestsSent": [],
                     "requestsReceived": []
                 ])

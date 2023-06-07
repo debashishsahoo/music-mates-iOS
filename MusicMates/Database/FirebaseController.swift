@@ -15,14 +15,15 @@ import SafariServices
 
 /// Controls the Firestore database on Firebase and contains methods of getting/setting data in the database
 class FirebaseController: NSObject, DatabaseProtocol {
-
     //  References to the Firebase Authentication System, the Firebase Firestore Database and references for documents/collections
     var authController: Auth
     var database: Firestore
     
     var usersRef: CollectionReference?
     var userRef: DocumentReference?
-    var currentUser: FirebaseAuth.User?
+    var currentUser: User?
+    
+    weak var homeScreen: HomeCollectionViewController?
     
     
     /// Initialize class with reference to the Firebase Firestore database
@@ -30,7 +31,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
-               
+                       
         super.init()
     }
     
@@ -166,83 +167,83 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func login(email: String, password: String) {
-        
-        Task {
-            do {
-                let authDataResult = try await authController.signIn(withEmail: email, password: password)
-                currentUser = authDataResult.user
-                
-//                // Save login state to User Defaults
-//                let userDefaults = UserDefaults.standard
-//                userDefaults.set(true, forKey: "isLoggedInKey")
-                
-                // Change Root View Controller to the Tab Bar Controller
-                let storyboard = await UIStoryboard(name: "Main", bundle: nil)
-                let TabBarController = await storyboard.instantiateViewController(identifier: "TabBarController")
-                await (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(TabBarController)
-            
-            }
-            catch {
-                print("Firebase Authentication Failed with Error \(String(describing: error))")
-//                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
-            }
 
-        }
-    }
     
-    func signup(firstName: String, lastName: String, email: String, password: String) {
-        Task {
-            do {
-                let authDataResult = try await authController.createUser(withEmail: email, password: password)
-                currentUser = authDataResult.user
-                
-//                // Save login state to User Defaults
-//                let userDefaults = UserDefaults.standard
-//                userDefaults.set(true, forKey: "isLoggedInKey")
-                
-                usersRef = database.collection("users")
-                userRef = usersRef?.document(currentUser!.uid)
-                try await userRef?.setData([
-                    "uid": currentUser!.uid,
-                    "firstname": firstName,
-                    "lastname": lastName,
-                    "email": email,
-                    "password": password,
-                    "username": "randomly-generated",
-                    "photoURL": "default_photo.png",
-                    "location": GeoPoint(latitude: 0, longitude: 0),
-                    "friends": [],
-                    "settings": [],
-                    "favSongs": [],
-                    "favArtists": []
-                ])
-                
+    
+    
+    
+    
+
+    
+//
+//
+//    func login(email: String, password: String) {
+//
+//        Task {
+//            do {
+//                let authDataResult = try await authController.signIn(withEmail: email, password: password)
+//                currentUser = authDataResult.user
+//
+////                // Save login state to User Defaults
+////                let userDefaults = UserDefaults.standard
+////                userDefaults.set(true, forKey: "isLoggedInKey")
+//
 //                // Change Root View Controller to the Tab Bar Controller
 //                let storyboard = await UIStoryboard(name: "Main", bundle: nil)
 //                let TabBarController = await storyboard.instantiateViewController(identifier: "TabBarController")
-////                let safariViewController = await SFSafariViewController(url: URL(string: "https://accounts.spotify.com/authorize")!)
-//
 //                await (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(TabBarController)
-            }
-            catch {
-                print("Firebase Authentication Failed with Error \(String(describing: error))")
-//                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
-            }
-        }
-    }
-    
-    
-    
+//
+//            }
+//            catch {
+//                print("Firebase Authentication Failed with Error \(String(describing: error))")
+////                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
+//            }
+//
+//        }
+//    }
+//
+//    func signup(firstName: String, lastName: String, email: String, password: String) {
+//        Task {
+//            do {
+//                let authDataResult = try await authController.createUser(withEmail: email, password: password)
+//                currentUser = authDataResult.user
+//
+////                // Save login state to User Defaults
+////                let userDefaults = UserDefaults.standard
+////                userDefaults.set(true, forKey: "isLoggedInKey")
+//
+//                usersRef = database.collection("users")
+//                userRef = usersRef?.document(currentUser!.uid)
+//                try await userRef?.setData([
+//                    "uid": currentUser!.uid,
+//                    "firstname": firstName,
+//                    "lastname": lastName,
+//                    "email": email,
+//                    "password": password,
+//                    "username": "randomly-generated",
+//                    "photoURL": "default_photo.png",
+//                    "location": GeoPoint(latitude: 0, longitude: 0),
+//                    "friends": [],
+//                    "settings": [],
+//                    "favSongs": [],
+//                    "favArtists": []
+//                ])
+//
+////                // Change Root View Controller to the Tab Bar Controller
+////                let storyboard = await UIStoryboard(name: "Main", bundle: nil)
+////                let TabBarController = await storyboard.instantiateViewController(identifier: "TabBarController")
+//////                let safariViewController = await SFSafariViewController(url: URL(string: "https://accounts.spotify.com/authorize")!)
+////
+////                await (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(TabBarController)
+//            }
+//            catch {
+//                print("Firebase Authentication Failed with Error \(String(describing: error))")
+////                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
+//            }
+//        }
+//    }
+//
+//
+//
     
 }

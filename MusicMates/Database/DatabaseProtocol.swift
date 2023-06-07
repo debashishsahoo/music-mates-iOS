@@ -13,9 +13,6 @@ import FirebaseFirestoreSwift
 /// Protocol that contains methods that the Firebase Controller should implement
 protocol DatabaseProtocol: AnyObject {
 
-    func login(email: String, password: String)
-    func signup(firstName: String, lastName: String, email: String, password: String)
-    
     func getUserData(uid: String, completion: @escaping ([String: Any?]) -> Void)
     func getDiscoverFriendsData(completion: @escaping ([QueryDocumentSnapshot]) -> Void)
     

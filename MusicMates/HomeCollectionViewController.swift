@@ -58,11 +58,16 @@ class HomeCollectionViewController: UICollectionViewController {
                     combinedFavArtits += friendFavArtists
                 }
             }
+                        
+            print(combinedFavArtits)
             dispatchGroup.leave()
             dispatchGroup.notify(queue: .main) {
-                print(combinedFavArtits)
                 self.rankCombinedArtists(combinedFavArtists: combinedFavArtits)
             }
+            
+            
+            
+            
         }
         
     }
@@ -79,7 +84,6 @@ class HomeCollectionViewController: UICollectionViewController {
         
         self.collectionView.reloadData()
         
-        print(self.commonArtistsRankedDict)
         
     }
     

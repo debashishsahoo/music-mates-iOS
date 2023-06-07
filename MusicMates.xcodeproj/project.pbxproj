@@ -20,6 +20,14 @@
 		3D5B66822A13579B0032AA58 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B66812A13579B0032AA58 /* FriendsTableViewController.swift */; };
 		3D5B66862A14C6110032AA58 /* DiscoverTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B66852A14C6110032AA58 /* DiscoverTableViewController.swift */; };
 		3D5B668A2A1BC1370032AA58 /* RequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B66892A1BC1370032AA58 /* RequestsTableViewController.swift */; };
+		3D8017032A247219004C592F /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3D8017022A247219004C592F /* MessageKit */; };
+		3D8017052A247B8C004C592F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8017042A247B8C004C592F /* ChatViewController.swift */; };
+		3D8017072A247C68004C592F /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8017062A247C68004C592F /* Chat.swift */; };
+		3D8017092A247C75004C592F /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8017082A247C75004C592F /* Sender.swift */; };
+		3D80170B2A247C80004C592F /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D80170A2A247C80004C592F /* ChatMessage.swift */; };
+		3D80170D2A24CEFF004C592F /* ChatHomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D80170C2A24CEFE004C592F /* ChatHomeTableViewController.swift */; };
+		3D80170F2A24E2BF004C592F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D80170E2A24E2BF004C592F /* MapViewController.swift */; };
+		3D8017112A264DBE004C592F /* LocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8017102A264DBE004C592F /* LocationAnnotation.swift */; };
 		3D8CC0DB2A078984000C7DD3 /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CC0DA2A078984000C7DD3 /* SpotifyLoginViewController.swift */; };
 		3D97F5EF2A23574600B72634 /* references.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3D97F5EE2A23574600B72634 /* references.txt */; };
 		3D9C0E2629FEB9E200607D9C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C0E2529FEB9E200607D9C /* RegisterViewController.swift */; };
@@ -49,6 +57,13 @@
 		3D5B66812A13579B0032AA58 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		3D5B66852A14C6110032AA58 /* DiscoverTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTableViewController.swift; sourceTree = "<group>"; };
 		3D5B66892A1BC1370032AA58 /* RequestsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsTableViewController.swift; sourceTree = "<group>"; };
+		3D8017042A247B8C004C592F /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		3D8017062A247C68004C592F /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		3D8017082A247C75004C592F /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
+		3D80170A2A247C80004C592F /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		3D80170C2A24CEFE004C592F /* ChatHomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHomeTableViewController.swift; sourceTree = "<group>"; };
+		3D80170E2A24E2BF004C592F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		3D8017102A264DBE004C592F /* LocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotation.swift; sourceTree = "<group>"; };
 		3D8CC0DA2A078984000C7DD3 /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
 		3D97F5EE2A23574600B72634 /* references.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = references.txt; sourceTree = "<group>"; };
 		3D97F5F02A23647B00B72634 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -68,6 +83,7 @@
 				3DA014E52A0165BC0040DD0F /* FirebaseAuth in Frameworks */,
 				3DA014E72A0165BC0040DD0F /* FirebaseFirestore in Frameworks */,
 				3DA014E92A0165BC0040DD0F /* FirebaseFirestoreSwift in Frameworks */,
+				3D8017032A247219004C592F /* MessageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +132,13 @@
 				3D5B66892A1BC1370032AA58 /* RequestsTableViewController.swift */,
 				3D15FCBE2A233FA800E4C546 /* ConstantsSecret.swift */,
 				3D97F5EE2A23574600B72634 /* references.txt */,
+				3D8017042A247B8C004C592F /* ChatViewController.swift */,
+				3D8017062A247C68004C592F /* Chat.swift */,
+				3D8017082A247C75004C592F /* Sender.swift */,
+				3D80170A2A247C80004C592F /* ChatMessage.swift */,
+				3D80170C2A24CEFE004C592F /* ChatHomeTableViewController.swift */,
+				3D80170E2A24E2BF004C592F /* MapViewController.swift */,
+				3D8017102A264DBE004C592F /* LocationAnnotation.swift */,
 			);
 			path = MusicMates;
 			sourceTree = "<group>";
@@ -156,6 +179,7 @@
 				3DA014E42A0165BC0040DD0F /* FirebaseAuth */,
 				3DA014E62A0165BC0040DD0F /* FirebaseFirestore */,
 				3DA014E82A0165BC0040DD0F /* FirebaseFirestoreSwift */,
+				3D8017022A247219004C592F /* MessageKit */,
 			);
 			productName = MusicMates;
 			productReference = 3D58F32829FEA63800F682AB /* MusicMates.app */;
@@ -187,6 +211,7 @@
 			mainGroup = 3D58F31F29FEA63800F682AB;
 			packageReferences = (
 				3DA014E32A0165BB0040DD0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3D8017012A247219004C592F /* XCRemoteSwiftPackageReference "MessageKit" */,
 			);
 			productRefGroup = 3D58F32929FEA63800F682AB /* Products */;
 			projectDirPath = "";
@@ -220,16 +245,23 @@
 			files = (
 				3D5B66862A14C6110032AA58 /* DiscoverTableViewController.swift in Sources */,
 				3D8CC0DB2A078984000C7DD3 /* SpotifyLoginViewController.swift in Sources */,
+				3D8017072A247C68004C592F /* Chat.swift in Sources */,
+				3D8017052A247B8C004C592F /* ChatViewController.swift in Sources */,
 				3DB5CCD72A020E6D00DFF7FA /* DatabaseProtocol.swift in Sources */,
 				3D5B66822A13579B0032AA58 /* FriendsTableViewController.swift in Sources */,
 				3DB5CCD32A02094800DFF7FA /* FirebaseController.swift in Sources */,
+				3D80170B2A247C80004C592F /* ChatMessage.swift in Sources */,
 				3D58F34229FEA8A600F682AB /* LoginViewController.swift in Sources */,
+				3D8017112A264DBE004C592F /* LocationAnnotation.swift in Sources */,
 				3D58F32C29FEA63800F682AB /* AppDelegate.swift in Sources */,
 				3D58F32E29FEA63800F682AB /* SceneDelegate.swift in Sources */,
 				3D5B667E2A13414A0032AA58 /* ProfileViewController.swift in Sources */,
 				3D5B66802A1345DA0032AA58 /* MyMusicTasteTableViewController.swift in Sources */,
+				3D80170F2A24E2BF004C592F /* MapViewController.swift in Sources */,
+				3D8017092A247C75004C592F /* Sender.swift in Sources */,
 				3D02F3D42A06B3570056A7C5 /* UIViewController+displayMessage.swift in Sources */,
 				3D5B668A2A1BC1370032AA58 /* RequestsTableViewController.swift in Sources */,
+				3D80170D2A24CEFF004C592F /* ChatHomeTableViewController.swift in Sources */,
 				3DA014E22A0119490040DD0F /* HomeCollectionViewController.swift in Sources */,
 				3D9C0E2629FEB9E200607D9C /* RegisterViewController.swift in Sources */,
 				3D15FCBF2A233FA800E4C546 /* ConstantsSecret.swift in Sources */,
@@ -450,6 +482,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3D8017012A247219004C592F /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		3DA014E32A0165BB0040DD0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -461,6 +501,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3D8017022A247219004C592F /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D8017012A247219004C592F /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
+		};
 		3DA014E42A0165BC0040DD0F /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3DA014E32A0165BB0040DD0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
