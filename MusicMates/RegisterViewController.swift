@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 import SafariServices
 
 /// View Controller for the Register Screen
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
 
     var authController: Auth?
     
@@ -51,6 +51,14 @@ class RegisterViewController: UIViewController {
         
         authController = Auth.auth()
         database = Firestore.firestore()
+        
+        // Set delegates for text fields to ensure keyboard disappears upon returning, and also setting appropriate placeholders
+        
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        confirmPasswordTextField.delegate = self
         
         firstNameTextField.attributedPlaceholder = NSAttributedString(
             string: "First Name",
@@ -150,76 +158,6 @@ class RegisterViewController: UIViewController {
         
     }
     
-    /// Handles user registration without Spotify connection
-    /// - Parameter sender: The Register without Spotify button
-    @IBAction func registerWithoutSpotifyBtnClicked(_ sender: Any) {
-        
-        let firstName = firstNameTextField.text
-        let lastName = lastNameTextField.text
-        let email = emailTextField.text
-        let password = passwordTextField.text
-        let confirmPassword = confirmPasswordTextField.text
-        
-        // Check that no fields are empty
-        guard firstName?.isEmpty == false, lastName?.isEmpty == false, email?.isEmpty == false, password?.isEmpty == false, confirmPassword?.isEmpty == false else {
-            displayMessage(title: "Error", message: "Cannot leave a field blank")
-            return
-        }
-        
-        // Check that email is valid
-        guard isValidEmail(email!) == true else {
-            displayMessage(title: "Error", message: "Please enter a valid email")
-            return
-        }
-        
-        // Check that the passwords match
-        guard password == confirmPassword else {
-            displayMessage(title: "Error", message: "Passwords do not match")
-            return
-        }
-        
-        // Check that the user has checked the Terms and Conditions box
-        guard checkBoxIsChecked == true else {
-            displayMessage(title: "Error", message: "Please tick the button to read and agree to our Terms and Conditions")
-            return
-        }
-        
-        Task {
-            do {
-                let authDataResult = try await authController!.createUser(withEmail: email!, password: password!)
-                currentUser = authDataResult.user
-                
-                usersRef = database.collection("users")
-                userRef = usersRef?.document(currentUser!.uid)
-                try await userRef?.setData([
-                    "uid": currentUser!.uid,
-                    "firstname": firstName!,
-                    "lastname": lastName!,
-                    "email": email!,
-                    "password": password!,
-                    "photoURL": "default_photo.png",
-                    "location": GeoPoint(latitude: 0, longitude: 0),
-                    "friends": [],
-                    "settings": [],
-                    "favSongs": [],
-                    "favArtists": [],
-                    "accessToken": "",
-                    "refreshToken": "",
-                    "requestsSent": [],
-                    "requestsReceived": [],
-                    "registeredWithSpotify": false
-                ])
-            } catch {
-                print("Firebase Authentication Failed with Error \(String(describing: error))")
-            }
-        }
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let TabBarController = storyboard.instantiateViewController(identifier: "TabBarController")
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(TabBarController)
-        
-    }
-    
     /// Handles and actually registers user after afer the user successfully authenticates with Spotify on the Spotify Authentication Login screen
     /// - Parameter sender: The Register with Spotify button
     func registerWithSpotify(accessToken: String, refreshToken: String, expiresIn: Int) {
@@ -282,6 +220,14 @@ class RegisterViewController: UIViewController {
         let emailPattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailPattern)
         return emailPredicate.evaluate(with: email)
+    }
+    
+    /// Ensures the keyboard disappears upon typing into a text field and returning
+    /// - Parameter textField: The text field
+    /// - Returns: Boolean to signify the user has returned after typing
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
 

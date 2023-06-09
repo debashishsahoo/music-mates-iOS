@@ -61,20 +61,16 @@ class DiscoverTableViewController: UITableViewController {
         
     /// Fetch table data
     func fetchAllData() {
-        getCurrentUserLocation() { success in
-            self.friendsList = []
-            self.discoverFriendsList = []
-            self.getDiscoverFriendsData()
-        }
+        friendsList = []
+        getCurrentUserLocation()
+        getDiscoverFriendsData()
     }
-    
+        
     /// Get current user's location
-    func getCurrentUserLocation(completion: @escaping (_ success: Bool) -> Void) {
+    func getCurrentUserLocation() {
         databaseController?.getUserData(uid: (authController?.currentUser?.uid)!) { (userData) in
             let location = userData["location"] as! GeoPoint
             self.currentUserLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            let success = true
-            completion(success)
         }
     }
     
@@ -101,8 +97,6 @@ class DiscoverTableViewController: UITableViewController {
                         // Don't display a user in the discover users page if they are already a friend of the current user
                         if !(friends.contains(user.reference)) {
                             self.databaseController?.getUserData(uid: user.documentID) { (userData) in
-                                self.discoverFriendsList = []
-                                
                                 let firstName = userData["firstname"] as! String
                                 let lastName = userData["lastname"] as! String
                                 
@@ -128,7 +122,6 @@ class DiscoverTableViewController: UITableViewController {
 
                                 if counter == usersData.count {
                                     self.discoverFriendsList.removeAll()
-
                                     for id in self.friendsList {
                                         self.discoverFriendsList.append((self.friendsDistanceDict[id]!.0, self.friendsDistanceDict[id]!.2))
                                     }

@@ -50,7 +50,6 @@ class ChatHomeTableViewController: UITableViewController {
     
     /// Fetch table data
     func fetchAllData() {
-        friendsList = []
         getFriendsData()
     }
 
@@ -95,12 +94,16 @@ class ChatHomeTableViewController: UITableViewController {
     func getFriendsData() {
         databaseController?.getUserData(uid: (authController?.currentUser?.uid)!) { (userData) in
             let friends = userData["friends"] as! [Any]
+            self.friendsList.removeAll()
+            var counter = 0
             for friend in friends {
+                counter += 1
                 self.databaseController?.getUserData(uid: (friend as AnyObject).documentID) { (userData) in
                     self.friendsList.append(userData)
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                    if counter == friends.count {
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     }
                 }
             }

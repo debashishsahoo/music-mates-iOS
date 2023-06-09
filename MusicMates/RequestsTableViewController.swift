@@ -52,7 +52,6 @@ class RequestsTableViewController: UITableViewController {
     
     /// Fetch table data
     func fetchAllData() {
-        requestsList = []
         getRequestsData()
     }
 
@@ -97,12 +96,16 @@ class RequestsTableViewController: UITableViewController {
     func getRequestsData() {
         databaseController?.getUserData(uid: (authController?.currentUser?.uid)!) { (userData) in
             let requestsReceived = userData["requestsReceived"] as! [Any]
+            self.requestsList.removeAll()
+            var count = 0
             for friend in requestsReceived {
+                count += 1
                 self.databaseController?.getUserData(uid: (friend as AnyObject).documentID) { (userData) in
                     self.requestsList.append(userData)
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                    if count == requestsReceived.count {
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     }
                 }
             }

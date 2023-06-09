@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 
 
 /// View Controller for the Login Screen
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     weak var databaseController: DatabaseProtocol?
 
@@ -75,6 +75,11 @@ class LoginViewController: UIViewController {
         
         authController = Auth.auth()
         
+        // Set delegates for text fields to ensure keyboard disappears upon returning, and also setting appropriate placeholders
+
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        
         emailTextField.attributedPlaceholder = NSAttributedString(
             string: "Email Address",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
@@ -93,6 +98,15 @@ class LoginViewController: UIViewController {
         let emailPattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailPattern)
         return emailPredicate.evaluate(with: email)
+    }
+    
+    
+    /// Ensures the keyboard disappears upon typing into a text field and returning
+    /// - Parameter textField: The text field
+    /// - Returns: Boolean to signify the user has returned after typing
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     /*

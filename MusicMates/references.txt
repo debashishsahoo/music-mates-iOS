@@ -40,7 +40,7 @@ REFERENCES & ACKNOWLEDGEMENT
 
 (7)    "Defining a custom URL scheme for your app": https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app#
 
-•    Used in SpotifyLoginViewController.swift to correctly define the URL scheme of my app project
+•    Used in SpotifyLoginViewController.swift to define the URL scheme of my app
 
 (8)    "How to parse JSON using JSONSerialization": https://www.hackingwithswift.com/example-code/system/how-to-parse-json-using-jsonserialization
 
@@ -58,6 +58,8 @@ REFERENCES & ACKNOWLEDGEMENT
 
 •    Used in ChatViewController.swift to generate a random ID for each chat message
 
+(12)    "Swift: Can't get UITextField to dismiss keyboard": https://stackoverflow.com/questions/42618218/swift-cant-get-uitextfield-to-dismiss-keyboard
 
+•    Used in LoginViewController.swift and RegisterViewController.swift to dismiss the keyboard once the user returns while typing into a text field, using delegate method
 
 

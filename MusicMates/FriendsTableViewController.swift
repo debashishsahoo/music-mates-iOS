@@ -51,7 +51,6 @@ class FriendsTableViewController: UITableViewController {
     
     /// Fetch table data
     func fetchAllData() {
-        friendsList = []
         getFriendsData()
     }
 
@@ -96,12 +95,16 @@ class FriendsTableViewController: UITableViewController {
     func getFriendsData() {
         databaseController?.getUserData(uid: (authController?.currentUser?.uid)!) { (userData) in
             let friends = userData["friends"] as! [Any]
+            self.friendsList.removeAll()
+            var count = 0
             for friend in friends {
+                count += 1
                 self.databaseController?.getUserData(uid: (friend as AnyObject).documentID) { (userData) in
                     self.friendsList.append(userData)
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                    if count == friends.count {
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     }
                 }
             }

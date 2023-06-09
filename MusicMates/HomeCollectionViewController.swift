@@ -66,7 +66,6 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
         fetchUserSpotifyData() { success in
             self.combinedFavArtists = []
             self.commonArtistsRankedDict = [:]
-            self.finalCombinedArtistsList = []
             self.fetchCommonArtists()
         }
     }
@@ -109,7 +108,9 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
                         
             let friends = userData["friends"] as! Array<DocumentReference>
             if friends.count > 0 {
+                var count = 0
                 for friend in friends {
+                    count += 1
                     self.databaseController?.getUserData(uid: friend.documentID) { (userData) in
                         let friendFavArtists = userData["favArtists"] as! [[String: String]]
                         for artist in friendFavArtists {
@@ -127,19 +128,22 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
                         })
 
                         self.combinedFavArtists = sortedArtistsList
-
-                        self.finalCombinedArtistsList = []
-                        for artistName in self.combinedFavArtists {
-                            self.finalCombinedArtistsList.append((artistName, self.commonArtistsRankedDict[artistName]!.0, self.commonArtistsRankedDict[artistName]!.1))
-                        }
                         
-                        DispatchQueue.main.async {
-                            self.collectionView.reloadData()
+                        if count == friends.count {
+                            self.finalCombinedArtistsList.removeAll()
+                            for artistName in self.combinedFavArtists {
+                                self.finalCombinedArtistsList.append((artistName, self.commonArtistsRankedDict[artistName]!.0, self.commonArtistsRankedDict[artistName]!.1))
+                            }
+                            
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
                         }
+
                     }
                 }
             } else {
-                self.finalCombinedArtistsList = []
+                self.finalCombinedArtistsList.removeAll()
                 for artistName in self.combinedFavArtists {
                     self.finalCombinedArtistsList.append((artistName, self.commonArtistsRankedDict[artistName]!.0, self.commonArtistsRankedDict[artistName]!.1))
                 }
