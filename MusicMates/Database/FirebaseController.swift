@@ -25,7 +25,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     weak var homeScreen: HomeCollectionViewController?
     
-    
     /// Initialize class with reference to the Firebase Firestore database
     override init() {
         FirebaseApp.configure()
@@ -91,7 +90,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         userRef?.updateData(data)
     }
-    
     
     /// Handle unfriend action
     /// - Parameters:
@@ -165,85 +163,4 @@ class FirebaseController: NSObject, DatabaseProtocol {
         fromUserRef?.updateData(["requestsSent": FieldValue.arrayRemove([toUserRef!])])
         toUserRef?.updateData(["requestsReceived": FieldValue.arrayRemove([fromUserRef!])])
     }
-    
-    
-
-    
-    
-    
-    
-    
-
-    
-//
-//
-//    func login(email: String, password: String) {
-//
-//        Task {
-//            do {
-//                let authDataResult = try await authController.signIn(withEmail: email, password: password)
-//                currentUser = authDataResult.user
-//
-////                // Save login state to User Defaults
-////                let userDefaults = UserDefaults.standard
-////                userDefaults.set(true, forKey: "isLoggedInKey")
-//
-//                // Change Root View Controller to the Tab Bar Controller
-//                let storyboard = await UIStoryboard(name: "Main", bundle: nil)
-//                let TabBarController = await storyboard.instantiateViewController(identifier: "TabBarController")
-//                await (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(TabBarController)
-//
-//            }
-//            catch {
-//                print("Firebase Authentication Failed with Error \(String(describing: error))")
-////                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
-//            }
-//
-//        }
-//    }
-//
-//    func signup(firstName: String, lastName: String, email: String, password: String) {
-//        Task {
-//            do {
-//                let authDataResult = try await authController.createUser(withEmail: email, password: password)
-//                currentUser = authDataResult.user
-//
-////                // Save login state to User Defaults
-////                let userDefaults = UserDefaults.standard
-////                userDefaults.set(true, forKey: "isLoggedInKey")
-//
-//                usersRef = database.collection("users")
-//                userRef = usersRef?.document(currentUser!.uid)
-//                try await userRef?.setData([
-//                    "uid": currentUser!.uid,
-//                    "firstname": firstName,
-//                    "lastname": lastName,
-//                    "email": email,
-//                    "password": password,
-//                    "username": "randomly-generated",
-//                    "photoURL": "default_photo.png",
-//                    "location": GeoPoint(latitude: 0, longitude: 0),
-//                    "friends": [],
-//                    "settings": [],
-//                    "favSongs": [],
-//                    "favArtists": []
-//                ])
-//
-////                // Change Root View Controller to the Tab Bar Controller
-////                let storyboard = await UIStoryboard(name: "Main", bundle: nil)
-////                let TabBarController = await storyboard.instantiateViewController(identifier: "TabBarController")
-//////                let safariViewController = await SFSafariViewController(url: URL(string: "https://accounts.spotify.com/authorize")!)
-////
-////                await (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(TabBarController)
-//            }
-//            catch {
-//                print("Firebase Authentication Failed with Error \(String(describing: error))")
-////                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
-//            }
-//        }
-//    }
-//
-//
-//
-    
 }

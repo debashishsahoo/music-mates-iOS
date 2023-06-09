@@ -27,8 +27,6 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
-    @IBOutlet weak var forgotPasswordLabel: UILabel!
-    
     @IBOutlet weak var loginButton: UIButton!
     
     @IBOutlet weak var registerButton: UIButton!
@@ -70,27 +68,22 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
         // Get a reference to the database from the appDelegate
         let appDelegate = (UIApplication.shared.delegate as? AppDelegate)
         databaseController = appDelegate?.databaseController
         
         authController = Auth.auth()
-
-            
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        authController = Auth.auth()
         
-        do {
-            try authController?.signOut()
-        } catch let signOutError as NSError {
-            print("Error signing out: \(signOutError)")
-        }
-
+        emailTextField.attributedPlaceholder = NSAttributedString(
+            string: "Email Address",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
     }
     
     /// Checks if the email address entered is valid
@@ -102,7 +95,6 @@ class LoginViewController: UIViewController {
         return emailPredicate.evaluate(with: email)
     }
     
-
     /*
     // MARK: - Navigation
 

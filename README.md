@@ -1,6 +1,6 @@
 #  MusicMates
 
-**MusicMates** is an iOS app (currently under development) that will allow music lovers to connect with strangers sharing similar music tastes, chat and discuss with them about their favorite artists in real-time, and even share their top Spotify songs and albums with each other. MusicMates will be the all-in-one pitstop for all music fanatics to make friends, connections, and discover fellow enthusiasts easier than ever before.
+**MusicMates** is an iOS app that allows music lovers to connect with strangers sharing similar music tastes, chat and discuss with them about their favorite artists in real-time, and even share their top Spotify songs and albums with each other. MusicMates is the all-in-one pitstop for all music fanatics to make friends, connections, and discover fellow enthusiasts easier than ever before.
 
 ## Features
 

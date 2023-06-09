@@ -17,9 +17,9 @@ class SpotifyLoginViewController: UIViewController, ASWebAuthenticationPresentat
     
     var webAuthSession: ASWebAuthenticationSession?
     
-    let clientID = MyClientID
-    let clientSecret = MyClientSecret
-    let redirectURI = MyRedirectURI
+    let clientID = MyClientID // ENTER YOUR OWN SPOTIFY CLIENT ID TO RUN THE APP
+    let clientSecret = MyClientSecret // ENTER YOUR OWN SPOTIFY CLIENT SECRET TO RUN THE APP
+    let redirectURI = MyRedirectURI // ENTER YOUR OWN SPOTIFY REDIRECT URI TO RUN THE APP
 
     let authorizeURLString = "https://accounts.spotify.com/authorize"
     let tokenEndpointURLString = "https://accounts.spotify.com/api/token"
@@ -30,7 +30,7 @@ class SpotifyLoginViewController: UIViewController, ASWebAuthenticationPresentat
         registerViewController = RegisterViewController()
         
         // Build URL for authorization with Spotify and start a web authentication session
-        let authorizeURL = URL(string: authorizeURLString + "?client_id=\(clientID)&response_type=code&redirect_uri=\(redirectURI)&scope=user-read-email%20user-top-read")!
+        let authorizeURL = URL(string: authorizeURLString + "?client_id=\(clientID)&response_type=code&redirect_uri=\(redirectURI)&scope=user-read-email%20user-top-read%20user-read-private")!
         
         webAuthSession = ASWebAuthenticationSession(url: authorizeURL, callbackURLScheme: "musicmates", completionHandler: { (url, error) in
             if let error = error {
@@ -112,14 +112,12 @@ class SpotifyLoginViewController: UIViewController, ASWebAuthenticationPresentat
         dataTask.resume()
     }
     
-
     /// Informs the delegate from which window it should present content to the user.
     /// - Parameter session: The web authentication session
     /// - Returns: The window where the content should be presented
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return view.window ?? ASPresentationAnchor()
     }
-    
     
     /*
     // MARK: - Navigation

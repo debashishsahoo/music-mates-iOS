@@ -25,8 +25,8 @@ class RegisterViewController: UIViewController {
     var currentUser: FirebaseAuth.User?
     
     var checkBoxIsChecked = false
-    let checkBoxImage = UIImage(named: "CheckedCheckbox")! as UIImage
-    let uncheckedCheckBoxImage = UIImage(named: "UncheckedCheckbox")! as UIImage
+    let checkBoxImage = UIImage(systemName: "checkmark.square")
+    let uncheckedCheckBoxImage = UIImage(systemName: "square")
     
     @IBOutlet weak var firstNameTextField: UITextField!
     
@@ -39,7 +39,6 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     
     @IBOutlet weak var checkBoxBtn: UIButton!
-    
     
     /// Toggles the check box for agreering to terms and conditions
     /// - Parameter sender: The checkbox button
@@ -149,7 +148,6 @@ class RegisterViewController: UIViewController {
                     "lastname": lastName!,
                     "email": email!,
                     "password": password!,
-                    "username": "randomly-generated",
                     "photoURL": "default_photo.png",
                     "location": GeoPoint(latitude: 0, longitude: 0),
                     "friends": [],
@@ -159,7 +157,8 @@ class RegisterViewController: UIViewController {
                     "accessToken": "",
                     "refreshToken": "",
                     "requestsSent": [],
-                    "requestsReceived": []
+                    "requestsReceived": [],
+                    "registeredWithSpotify": false
                 ])
             } catch {
                 print("Firebase Authentication Failed with Error \(String(describing: error))")
@@ -184,6 +183,7 @@ class RegisterViewController: UIViewController {
         
         Task {
             do {
+                print("Reached Here 1")
                 let authDataResult = try await authController!.createUser(withEmail: strings["email"]!, password: strings["password"]!)
                 currentUser = authDataResult.user
                 
@@ -196,7 +196,6 @@ class RegisterViewController: UIViewController {
                     "lastname": strings["lastName"]!,
                     "email": strings["email"]!,
                     "password": strings["password"]!,
-                    "username": "randomly-generated",
                     "photoURL": "default_photo.png",
                     "location": GeoPoint(latitude: 0, longitude: 0),
                     "friends": [],
@@ -207,25 +206,27 @@ class RegisterViewController: UIViewController {
                     "refreshToken": refreshToken,
                     "expiresIn": expiresIn,
                     "requestsSent": [],
-                    "requestsReceived": []
+                    "requestsReceived": [],
+                    "registeredWithSpotify": true
                 ])
                 
+                print("Reached Here 2")
+                
+                // Delete the temp dict from user defaults
+                userDefaults.removeObject(forKey: "tempDictKey")
+                
+                // Change Root View Controller to the Tab Bar Controller
+                DispatchQueue.main.async {
+                    print("Reached Here 3")
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let TabBarController = storyboard.instantiateViewController(identifier: "TabBarController")
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(TabBarController)
+                }
             }
             catch {
                 print("Firebase Authentication Failed with Error \(String(describing: error))")
             }
         }
-        
-        // Delete the temp dict from user defaults
-        userDefaults.removeObject(forKey: "tempDictKey")
-        
-        // Change Root View Controller to the Tab Bar Controller
-        DispatchQueue.main.async {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let TabBarController = storyboard.instantiateViewController(identifier: "TabBarController")
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(TabBarController)
-        }
-
     }
     
     override func viewDidLoad() {
@@ -239,6 +240,31 @@ class RegisterViewController: UIViewController {
         
         authController = Auth.auth()
         database = Firestore.firestore()
+        
+        firstNameTextField.attributedPlaceholder = NSAttributedString(
+            string: "First Name",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        
+        lastNameTextField.attributedPlaceholder = NSAttributedString(
+            string: "Last Name",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        
+        emailTextField.attributedPlaceholder = NSAttributedString(
+            string: "Enter a valid email address",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Create Password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        
+        confirmPasswordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Confirm Password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {

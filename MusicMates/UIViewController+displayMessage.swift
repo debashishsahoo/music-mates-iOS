@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 extension UIViewController {
     /// DIsplays a UI Alert to the user on the screen (used for various purposes throughout the app, such as success and error messages)
     /// - Parameters:

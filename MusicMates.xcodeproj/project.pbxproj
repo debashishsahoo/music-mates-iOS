@@ -20,6 +20,9 @@
 		3D5B66822A13579B0032AA58 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B66812A13579B0032AA58 /* FriendsTableViewController.swift */; };
 		3D5B66862A14C6110032AA58 /* DiscoverTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B66852A14C6110032AA58 /* DiscoverTableViewController.swift */; };
 		3D5B668A2A1BC1370032AA58 /* RequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5B66892A1BC1370032AA58 /* RequestsTableViewController.swift */; };
+		3D7A66BD2A30C92D0093458C /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7A66BC2A30C92D0093458C /* SettingsTableViewController.swift */; };
+		3D7A66BF2A30D3300093458C /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7A66BE2A30D3300093458C /* Artist.swift */; };
+		3D7A66C12A31E7540093458C /* FriendMusicTasteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7A66C02A31E7540093458C /* FriendMusicTasteTableViewController.swift */; };
 		3D8017032A247219004C592F /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3D8017022A247219004C592F /* MessageKit */; };
 		3D8017052A247B8C004C592F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8017042A247B8C004C592F /* ChatViewController.swift */; };
 		3D8017072A247C68004C592F /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8017062A247C68004C592F /* Chat.swift */; };
@@ -57,6 +60,9 @@
 		3D5B66812A13579B0032AA58 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		3D5B66852A14C6110032AA58 /* DiscoverTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTableViewController.swift; sourceTree = "<group>"; };
 		3D5B66892A1BC1370032AA58 /* RequestsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsTableViewController.swift; sourceTree = "<group>"; };
+		3D7A66BC2A30C92D0093458C /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		3D7A66BE2A30D3300093458C /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
+		3D7A66C02A31E7540093458C /* FriendMusicTasteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendMusicTasteTableViewController.swift; sourceTree = "<group>"; };
 		3D8017042A247B8C004C592F /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3D8017062A247C68004C592F /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		3D8017082A247C75004C592F /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
@@ -139,6 +145,9 @@
 				3D80170C2A24CEFE004C592F /* ChatHomeTableViewController.swift */,
 				3D80170E2A24E2BF004C592F /* MapViewController.swift */,
 				3D8017102A264DBE004C592F /* LocationAnnotation.swift */,
+				3D7A66BC2A30C92D0093458C /* SettingsTableViewController.swift */,
+				3D7A66BE2A30D3300093458C /* Artist.swift */,
+				3D7A66C02A31E7540093458C /* FriendMusicTasteTableViewController.swift */,
 			);
 			path = MusicMates;
 			sourceTree = "<group>";
@@ -249,6 +258,7 @@
 				3D8017052A247B8C004C592F /* ChatViewController.swift in Sources */,
 				3DB5CCD72A020E6D00DFF7FA /* DatabaseProtocol.swift in Sources */,
 				3D5B66822A13579B0032AA58 /* FriendsTableViewController.swift in Sources */,
+				3D7A66BF2A30D3300093458C /* Artist.swift in Sources */,
 				3DB5CCD32A02094800DFF7FA /* FirebaseController.swift in Sources */,
 				3D80170B2A247C80004C592F /* ChatMessage.swift in Sources */,
 				3D58F34229FEA8A600F682AB /* LoginViewController.swift in Sources */,
@@ -257,6 +267,7 @@
 				3D58F32E29FEA63800F682AB /* SceneDelegate.swift in Sources */,
 				3D5B667E2A13414A0032AA58 /* ProfileViewController.swift in Sources */,
 				3D5B66802A1345DA0032AA58 /* MyMusicTasteTableViewController.swift in Sources */,
+				3D7A66C12A31E7540093458C /* FriendMusicTasteTableViewController.swift in Sources */,
 				3D80170F2A24E2BF004C592F /* MapViewController.swift in Sources */,
 				3D8017092A247C75004C592F /* Sender.swift in Sources */,
 				3D02F3D42A06B3570056A7C5 /* UIViewController+displayMessage.swift in Sources */,
@@ -264,6 +275,7 @@
 				3D80170D2A24CEFF004C592F /* ChatHomeTableViewController.swift in Sources */,
 				3DA014E22A0119490040DD0F /* HomeCollectionViewController.swift in Sources */,
 				3D9C0E2629FEB9E200607D9C /* RegisterViewController.swift in Sources */,
+				3D7A66BD2A30C92D0093458C /* SettingsTableViewController.swift in Sources */,
 				3D15FCBF2A233FA800E4C546 /* ConstantsSecret.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

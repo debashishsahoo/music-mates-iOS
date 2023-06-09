@@ -4,10 +4,6 @@
 //
 //  Created by Debashish Sahoo on 29/5/2023.
 //
-//  References:
-//  "MessageKit": https://messagekit.github.io
-//  "MessageKit Github": https://github.com/MessageKit/MessageKit
-//  "3 Ways to Generate Random Strings in Swift": https://www.slingacademy.com/article/ways-to-generate-random-strings-in-swift/
 
 import UIKit
 import MessageKit
@@ -154,7 +150,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         // Clear the input bar text field
         inputBar.inputTextView.text = ""
     }
-    
     
     /// Gets a specific message item at a specified index path
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {

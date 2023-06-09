@@ -25,8 +25,8 @@ class MyMusicTasteTableViewController: UITableViewController {
     
     let CELL_ARTIST = "artistCell"
     
-    var artistsList: [String] = []
-    
+    var artistsList: [[String: String]] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,9 +42,8 @@ class MyMusicTasteTableViewController: UITableViewController {
         
         authController = Auth.auth()
         
-        // Fetch the user's top tracks
-        fetchUserSpotifyData()
-        
+        // Use the user's refresh token to set a new access token for the user, which then fetches the top artists for the user
+        refreshUserAccessToken()
     }
     
     /// Set a new access token for the user using their Spotify refresh token as access tokens expire in 1 hour
@@ -79,6 +78,9 @@ class MyMusicTasteTableViewController: UITableViewController {
                             print("Expires In: \(expiresIn)")
 
                             self.databaseController?.updateUserData(uid: (self.authController?.currentUser!.uid)!, data: ["accessToken": accessToken, "expiresIn": expiresIn])
+                            
+                            // Fetch the user's top artists
+                            self.fetchUserSpotifyData()
                         } else {
                             self.displayMessage(title: "Error", message: "Failed to fully connect your Spotify account. Try again.")
                         }
@@ -94,14 +96,22 @@ class MyMusicTasteTableViewController: UITableViewController {
         }
         dataTask.resume()
     }
+    
+    /// Use the user's refresh token to set a new access token for the user (as access tokens are only valid for 1 hour)
+    func refreshUserAccessToken() {
+        databaseController?.getUserData(uid: (authController?.currentUser!.uid)!) { (userData) in
+            // Only go ahead with fetching Spotify details if the user registered with the app using Spotify
+            if userData["registeredWithSpotify"] as! Bool == true {
+                // Use the user's refresh token as the access tokens are only valid for 1 hour
+                let refreshToken = userData["refreshToken"] as! String
+                self.setNewAccessToken(refreshToken)
+            }
+        }
+    }
 
     /// Fetch user's top tracks from Spotify using their access token
     func fetchUserSpotifyData() {
         databaseController?.getUserData(uid: (authController?.currentUser!.uid)!) { (userData) in
-            
-            // Use the user's refresh token as the access tokens are only valid for 1 hour
-            let refreshToken = userData["refreshToken"] as! String
-            self.setNewAccessToken(refreshToken)
             let accessToken = userData["accessToken"] as! String
             
             // Build the request method, headers, and parameters for the token endpoint url required to grab access token from Spotify using the received authorization code earlier
@@ -122,7 +132,14 @@ class MyMusicTasteTableViewController: UITableViewController {
                             // Get user's Access Token, Refresh Token, and the time their access token expires in (seconds)
                             if let artists = json?["items"] as? [[String: Any]] {
                                 for artist in artists {
-                                    self.artistsList.append(artist["name"] as! String)
+                                    let artistName = artist["name"] as! String
+                                    let artistImages = artist["images"] as! [[String: Any]]
+                                    let artistImageURL = artistImages[1]["url"] as! String
+                                    
+                                    self.artistsList.append([
+                                        "name": artistName,
+                                        "imageURL": artistImageURL
+                                    ])
                                 }
                                 self.databaseController?.updateUserData(uid: (self.authController?.currentUser!.uid)!, data: ["favArtists": self.artistsList])
                                 DispatchQueue.main.async {
@@ -154,21 +171,25 @@ class MyMusicTasteTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (section) {
             case SECTION_ARTISTS:
-                return artistsList.count
+                if !artistsList.isEmpty {
+                    return artistsList.count
+                } else {
+                    return 1
+                }
             default:
                 return 0
         }
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        // Configure and return artist cell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
         let artistCell = tableView.dequeueReusableCell(withIdentifier: CELL_ARTIST, for: indexPath)
-        
         var content = artistCell.defaultContentConfiguration()
-        content.text = artistsList[indexPath.row]
+        if !artistsList.isEmpty {
+            content.text = "\(indexPath.row + 1)) \(artistsList[indexPath.row]["name"]!)"
+        } else {
+            content.text = "Please Connect Your Spotify Account."
+        }
         artistCell.contentConfiguration = content
-        
         return artistCell
     }
     

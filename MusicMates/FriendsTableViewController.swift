@@ -12,10 +12,14 @@ import FirebaseFirestoreSwift
 /// View Controller for the user's Friends Screen
 class FriendsTableViewController: UITableViewController {
     
-    var friendsList: [[String: Any?]] = []
+    let SECTION_FRIENDS = 0
+    let SECTION_INFO = 1
     
     let CELL_FRIEND = "friendCell"
+    let CELL_INFO = "infoCell"
     
+    var friendsList: [[String: Any?]] = []
+        
     weak var databaseController: DatabaseProtocol?
     var authController: Auth?
 
@@ -23,12 +27,6 @@ class FriendsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Get a reference to the database from the appDelegate
         let appDelegate = (UIApplication.shared.delegate as? AppDelegate)
@@ -60,23 +58,37 @@ class FriendsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friendsList.count
+        if section == SECTION_FRIENDS {
+            return friendsList.count
+        } else {
+            return 1
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let friendCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIEND, for: indexPath)
-        
-        var content = friendCell.defaultContentConfiguration()
-        let firstName =  friendsList[indexPath.row]["firstname"] as! String
-        let lastName = friendsList[indexPath.row]["lastname"] as! String
-        content.text = firstName + " " + lastName
-        friendCell.contentConfiguration = content
-        
-        return friendCell
+        if indexPath.section == SECTION_FRIENDS {
+            let friendCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIEND, for: indexPath)
+            var content = friendCell.defaultContentConfiguration()
+            let firstName =  friendsList[indexPath.row]["firstname"] as! String
+            let lastName = friendsList[indexPath.row]["lastname"] as! String
+            content.text = firstName + " " + lastName
+            friendCell.contentConfiguration = content
+            return friendCell
+        } else {
+            let infoCell = tableView.dequeueReusableCell(withIdentifier: CELL_INFO, for: indexPath)
+            var content = infoCell.defaultContentConfiguration()
+            if friendsList.isEmpty {
+                content.text = "No Friends. Head to the Discover Page."
+            } else {
+                content.text = "\(friendsList.count) Friends(s)"
+            }
+            infoCell.contentConfiguration = content
+            return infoCell
+        }
     }
     
     /// Get user data for all friends of the current user from Firebase
@@ -119,7 +131,30 @@ class FriendsTableViewController: UITableViewController {
 
         return configuration
     }
+    
+    // MARK: - Navigation
 
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "friendArtistsSegue" {
+            if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
+                let friendData = friendsList[indexPath.row]
+                let friendName = friendData["firstname"] as! String
+                let friendFavArtists = friendData["favArtists"] as! [[String: String]]
+                
+                var friendArtistNames: [String] = []
+                for artist in friendFavArtists {
+                    friendArtistNames.append(artist["name"]!)
+                }
+                
+                let controller = segue.destination as! FriendMusicTasteTableViewController
+                controller.friendName = friendName
+                controller.friendArtistsList = friendArtistNames
+            }
+        }
+    }
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -136,7 +171,7 @@ class FriendsTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     */
 
@@ -152,16 +187,6 @@ class FriendsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
     */
 

@@ -12,9 +12,13 @@ import FirebaseFirestoreSwift
 /// View Controller for the Friend Requests Screen
 class RequestsTableViewController: UITableViewController {
 
-    var requestsList: [[String: Any?]] = []
-    
+    let SECTION_REQUESTS = 0
+    let SECTION_INFO = 1
+
     let CELL_REQUEST = "requestCell"
+    let CELL_INFO = "infoCell"
+    
+    var requestsList: [[String: Any?]] = []
     
     weak var databaseController: DatabaseProtocol?
     var authController: Auth?
@@ -23,12 +27,6 @@ class RequestsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Get a reference to the database from the appDelegate
         let appDelegate = (UIApplication.shared.delegate as? AppDelegate)
@@ -60,23 +58,37 @@ class RequestsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return requestsList.count
+        if section == SECTION_REQUESTS {
+            return requestsList.count
+        } else {
+            return 1
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let requestCell = tableView.dequeueReusableCell(withIdentifier: CELL_REQUEST, for: indexPath)
-        
-        var content = requestCell.defaultContentConfiguration()
-        let firstName =  requestsList[indexPath.row]["firstname"] as! String
-        let lastName = requestsList[indexPath.row]["lastname"] as! String
-        content.text = firstName + " " + lastName
-        requestCell.contentConfiguration = content
-        
-        return requestCell
+        if indexPath.section == SECTION_REQUESTS {
+            let requestCell = tableView.dequeueReusableCell(withIdentifier: CELL_REQUEST, for: indexPath)
+            var content = requestCell.defaultContentConfiguration()
+            let firstName =  requestsList[indexPath.row]["firstname"] as! String
+            let lastName = requestsList[indexPath.row]["lastname"] as! String
+            content.text = firstName + " " + lastName
+            requestCell.contentConfiguration = content
+            return requestCell
+        } else {
+            let infoCell = tableView.dequeueReusableCell(withIdentifier: CELL_INFO, for: indexPath)
+            var content = infoCell.defaultContentConfiguration()
+            if requestsList.isEmpty {
+                content.text = "No Friend Requests At The Moment."
+            } else {
+                content.text = "\(requestsList.count) Friend Request(s)"
+            }
+            infoCell.contentConfiguration = content
+            return infoCell
+        }
     }
     
     /// Get list of friend requests for the current user
@@ -109,7 +121,12 @@ class RequestsTableViewController: UITableViewController {
         let accept = UIContextualAction(style: .normal, title: "Accept") { (action, view, completionHandler) in
             self.databaseController?.handleFriendRequestAccepted(fromUid: requestUid, toUid: (self.authController?.currentUser!.uid)! as String)
             self.requestsList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            tableView.performBatchUpdates({
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+                self.tableView.reloadData()
+            }, completion: nil)
+
             self.displayMessage(title: "Friend Request Accepted", message: "You've got a new friend!")
             completionHandler(true)
         }
@@ -119,6 +136,7 @@ class RequestsTableViewController: UITableViewController {
             self.databaseController?.handleFriendRequestDeclined(fromUid: requestUid, toUid: (self.authController?.currentUser!.uid)! as String)
             self.requestsList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
             self.displayMessage(title: "Friend Request Rejected", message: "Not who you're looking for, it seems..")
             completionHandler(true)
         }
@@ -129,31 +147,25 @@ class RequestsTableViewController: UITableViewController {
         return configuration
     }
     
-    
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "friendArtistsSegue" {
+            if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
+                let friendData = requestsList[indexPath.row]
+                let friendName = friendData["firstname"] as! String
+                let friendFavArtists = friendData["favArtists"] as! [[String: String]]
+                
+                var friendArtistNames: [String] = []
+                for artist in friendFavArtists {
+                    friendArtistNames.append(artist["name"]!)
+                }
+                
+                let controller = segue.destination as! FriendMusicTasteTableViewController
+                controller.friendName = friendName
+                controller.friendArtistsList = friendArtistNames
+            }
+        }
     }
-    */
-
 }

@@ -23,11 +23,9 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var requestsBtn: UIButton!
         
-
     /// Handles user logging out
     /// - Parameter sender: The log out button
     @IBAction func logOutBtnClicked(_ sender: Any) {
-        authController = Auth.auth()
         do {
             try authController?.signOut()
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -38,7 +36,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,7 +44,6 @@ class ProfileViewController: UIViewController {
         databaseController = appDelegate?.databaseController
         
         authController = Auth.auth()
-        
     }
         
     override func viewDidAppear(_ animated: Bool) {
@@ -61,9 +57,7 @@ class ProfileViewController: UIViewController {
             let firstName = userData["firstname"] as! String
             let lastName = userData["lastname"] as! String
             self.nameLabel.text = firstName + " " + lastName
-            
-            let username = userData["username"] as! String
-            
+                        
             let friends = userData["friends"] as! [Any]
             self.friendsBtn.setTitle(String(friends.count), for: .normal)
             

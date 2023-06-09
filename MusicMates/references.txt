@@ -91,3 +91,12 @@ References for each file in the project
 //  "MessageKit": https://messagekit.github.io
 //  "MessageKit Github": https://github.com/MessageKit/MessageKit
 //  "3 Ways to Generate Random Strings in Swift": https://www.slingacademy.com/article/ways-to-generate-random-strings-in-swift/
+
+//
+//  HomeCollectionViewController.swift
+//  MusicMates
+//
+//  Created by Debashish Sahoo on 2/5/2023.
+//
+//  References:
+//  "How do I add text to an image in iOS Swift?": https://stackoverflow.com/questions/28906914/how-do-i-add-text-to-an-image-in-ios-swift

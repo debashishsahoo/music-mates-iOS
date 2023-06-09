@@ -13,13 +13,19 @@ import MapKit
 /// View Controller for the Discover Friends Screen
 class DiscoverTableViewController: UITableViewController {
     
+    let SECTION_USERS = 0
+    let SECTION_INFO = 1
+    
+    let CELL_USER = "userCell"
+    let CELL_INFO = "infoCell"
+    
     var friendsDistanceDict: [String: ([String: Any?], Double, String)] = [:]
     var discoverFriendsList: [([String:Any?], String)] = []
     var friendsList: [String] = []
     var currentUserLocation: CLLocationCoordinate2D?
     var currentUserFriends: Array<DocumentReference>?
     
-    let CELL_FRIEND = "friendCell"
+    var accessoryBtnTappedIndexPath: IndexPath?
         
     weak var databaseController: DatabaseProtocol?
     var authController: Auth?
@@ -30,26 +36,20 @@ class DiscoverTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Get a reference to the database from the appDelegate
         let appDelegate = (UIApplication.shared.delegate as? AppDelegate)
         databaseController = appDelegate?.databaseController
         
         authController = Auth.auth()
-        
+                        
         // Set up table refreshing feature
         self.refreshControl = tabelRefreshControl
         tabelRefreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.fetchAllData()
+        fetchAllData()
     }
     
     /// Refresh table data by swiping down
@@ -65,43 +65,7 @@ class DiscoverTableViewController: UITableViewController {
         getCurrentUserLocation()
         getDiscoverFriendsData()
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return discoverFriendsList.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Configure and return artist cell
-        let friendCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIEND, for: indexPath)
-                
-        let friendData = discoverFriendsList[indexPath.row].0
-        let friendRequestsReceived = friendData["requestsReceived"] as! Array<DocumentReference>
-        
-        // Show if the current user has already sent a friend request to one of the users on the Discover Friends list
-        var friendRequestStatus = ""
-        for userRef in friendRequestsReceived {
-            if userRef.documentID == authController?.currentUser?.uid {
-                friendRequestStatus = "Friend Request Sent"
-                break
-            }
-        }
-
-        var content = friendCell.defaultContentConfiguration()
-        content.text = discoverFriendsList[indexPath.row].1
-        content.secondaryText = friendRequestStatus
-        friendCell.contentConfiguration = content
-        
-        friendCell.accessoryType = .detailButton
-        
-        return friendCell
-    }
-        
+    
     /// Get current user's location
     func getCurrentUserLocation() {
         databaseController?.getUserData(uid: (authController?.currentUser?.uid)!) { (userData) in
@@ -123,7 +87,9 @@ class DiscoverTableViewController: UITableViewController {
     /// Get nearby users and their location and sort them by their distance from the current user
     func getDiscoverFriendsData() {
         databaseController?.getDiscoverFriendsData() { (usersData) in
+            var counter = 0
             for user in usersData {
+                counter += 1
                 // Don't display the current user in the discover users page
                 if (user.documentID != self.authController?.currentUser?.uid) {
                     self.databaseController?.getUserData(uid: (self.authController?.currentUser?.uid)!) { (userData) in
@@ -154,13 +120,17 @@ class DiscoverTableViewController: UITableViewController {
                                 })
 
                                 self.friendsList = sortedFriendsList
-                                
-                                for id in self.friendsList {
-                                    self.discoverFriendsList.append((self.friendsDistanceDict[id]!.0, self.friendsDistanceDict[id]!.2))
-                                }
 
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData()
+                                if counter == usersData.count {
+                                    self.discoverFriendsList.removeAll()
+
+                                    for id in self.friendsList {
+                                        self.discoverFriendsList.append((self.friendsDistanceDict[id]!.0, self.friendsDistanceDict[id]!.2))
+                                    }
+                                
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData()
+                                    }
                                 }
                             }
                         }
@@ -169,7 +139,61 @@ class DiscoverTableViewController: UITableViewController {
             }
         }
     }
+
+    // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == SECTION_USERS {
+            return discoverFriendsList.count
+        } else {
+            return 1
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Configure and return user cell
+        if indexPath.section == SECTION_USERS {
+            let userCell = tableView.dequeueReusableCell(withIdentifier: CELL_USER, for: indexPath)
+            var content = userCell.defaultContentConfiguration()
+            let friendData = discoverFriendsList[indexPath.row].0
+            let friendRequestsReceived = friendData["requestsReceived"] as! Array<DocumentReference>
+            
+            // Show if the current user has already sent a friend request to one of the users on the Discover Friends list
+            var friendRequestStatus = ""
+            for userRef in friendRequestsReceived {
+                if userRef.documentID == authController?.currentUser?.uid {
+                    friendRequestStatus = "Friend Request Sent"
+                    break
+                }
+            }
+            
+            content.text = discoverFriendsList[indexPath.row].1
+            content.secondaryText = friendRequestStatus
+            userCell.accessoryType = .detailButton
+            userCell.contentConfiguration = content
+            return userCell
+        } else {
+            let infoCell = tableView.dequeueReusableCell(withIdentifier: CELL_INFO, for: indexPath)
+            var content = infoCell.defaultContentConfiguration()
+            if discoverFriendsList.isEmpty {
+                content.text = "No Users Found."
+            } else {
+                content.text = "\(discoverFriendsList.count) User(s)"
+            }
+            infoCell.contentConfiguration = content
+            return infoCell
+        }
+    }
     
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        accessoryBtnTappedIndexPath = indexPath
+        performSegue(withIdentifier: "friendArtistsSegue", sender: self)
+    }
+        
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -216,10 +240,7 @@ class DiscoverTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "mapSegue" {
              if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
-                 let controller = segue.destination as! MapViewController
-                 
                  let friendData = discoverFriendsList[indexPath.row].0
-                 
                  let friendFirstName = friendData["firstname"] as! String
                  let friendLastName = friendData["lastname"] as! String
                  let friendName = friendFirstName + " " + friendLastName
@@ -228,11 +249,24 @@ class DiscoverTableViewController: UITableViewController {
                  let latitude = friendLocation.latitude
                  let longitude = friendLocation.longitude
                  
+                 let controller = segue.destination as! MapViewController
                  let annotation = LocationAnnotation(title: friendName, lat: latitude, long: longitude)
                  controller.annotation = annotation
              }
-         }
-        
+        } else if segue.identifier == "friendArtistsSegue" {
+            let friendData = discoverFriendsList[accessoryBtnTappedIndexPath!.row].0
+            let friendName = friendData["firstname"] as! String
+            let friendFavArtists = friendData["favArtists"] as! [[String: String]]
+            
+            var friendArtistNames: [String] = []
+            for artist in friendFavArtists {
+                friendArtistNames.append(artist["name"]!)
+            }
+            
+            let controller = segue.destination as! FriendMusicTasteTableViewController
+            controller.friendName = friendName
+            controller.friendArtistsList = friendArtistNames
+        }
     }
     
     
