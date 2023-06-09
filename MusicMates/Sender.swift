@@ -8,6 +8,7 @@
 import Foundation
 import MessageKit
 
+// Represents the sender of a chat message
 class Sender: SenderType {
     var senderId: String
     var displayName: String

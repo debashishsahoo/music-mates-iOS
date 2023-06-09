@@ -69,6 +69,7 @@ class FriendsTableViewController: UITableViewController {
         }
     }
 
+    // Display the user's friends and the count
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_FRIENDS {
             let friendCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIEND, for: indexPath)
@@ -113,7 +114,7 @@ class FriendsTableViewController: UITableViewController {
         return true
     }
     
-    /// Add swipe options to Unfriend for each friend 
+    /// Add swipe options to Unfriend a friend
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let friendData = friendsList[indexPath.row]
         let friendUid = friendData["uid"] as! String
@@ -128,14 +129,13 @@ class FriendsTableViewController: UITableViewController {
         unfriend.backgroundColor = .systemRed
         
         let configuration = UISwipeActionsConfiguration(actions: [unfriend])
-
         return configuration
     }
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Segue to the list of favourite artists for the particular friend clicked on
         if segue.identifier == "friendArtistsSegue" {
             if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
                 let friendData = friendsList[indexPath.row]

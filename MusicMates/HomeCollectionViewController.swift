@@ -24,7 +24,7 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
     var commonArtistsRankedDict: [String: (Int, String)] = [:]
     var finalCombinedArtistsList: [(String, Int, String)] = []
     
-    // For Location Purposes
+    // For User Location Purposes
     var locationManager: CLLocationManager = CLLocationManager()
     var currentLocation: CLLocationCoordinate2D?
     
@@ -42,15 +42,16 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
         databaseController = appDelegate?.databaseController
         
         authController = Auth.auth()
-        
-        self.navigationItem.setHidesBackButton(true, animated: true)
-        
+                
+        // Set up the desired accuracy, distance filter and delegate of the location manager.
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.distanceFilter = 10
         locationManager.delegate = self
         
+        // Check if we have user authorization to access location info
         let authorisationStatus = locationManager.authorizationStatus
         if authorisationStatus != .authorizedWhenInUse {
+            // If we have not yet asked the user for permission then request permission to access the location info
             if authorisationStatus == .notDetermined {
                 locationManager.requestWhenInUseAuthorization()
             }
@@ -58,8 +59,10 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // Informs the location manager to stop updating the location once the view appears
         locationManager.startUpdatingLocation()
         
+        // Fetch the user's spotify artists data before fetching data about the common artists in their friend circle
         fetchUserSpotifyData() { success in
             self.combinedFavArtists = []
             self.commonArtistsRankedDict = [:]
@@ -69,14 +72,17 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        // Informs the location manager to stop updating the location once the view disappears
         locationManager.stopUpdatingLocation()
     }
     
+    /// This method is called every time an update is received for the user's location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last?.coordinate
         saveLocation()
     }
     
+    /// Saves the current location of the user to their user data on  Firebase
     func saveLocation() {
         let geopoint = GeoPoint(latitude: currentLocation?.latitude ?? 0, longitude: currentLocation?.longitude ?? 0)
         self.databaseController?.updateUserData(uid: (self.authController?.currentUser!.uid)!, data: ["location": geopoint])
@@ -166,7 +172,6 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
                     } else if let data = data, let response = response as? HTTPURLResponse {
                         if response.statusCode == 200 {
                             do {
-                                print("Got Here")
                                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
                                 
                                 // Get user's Access Token, Refresh Token, and the time their access token expires in (seconds)
@@ -205,7 +210,13 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
             }
         }
     }
-        
+    
+    /// Adds a text label inside the given image
+    /// - Parameters:
+    ///   - text: The text to add to the image
+    ///   - image: The image
+    ///   - point: The point in the image to display the image
+    /// - Returns: The new image with the text
     func textToImage(drawText text: String, inImage image: UIImage, atPoint point: CGPoint) -> UIImage {
         let textColor = UIColor.white
         let textFont = UIFont(name: "Helvetica Bold", size: 68)!
@@ -250,6 +261,7 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
         let artistCount = finalCombinedArtistsList[indexPath.row].1
         let artistName = finalCombinedArtistsList[indexPath.row].0
         
+        // Fetch the artist's image using the image URL
         let urlSession = URLSession.shared
         let dataTask = urlSession.dataTask(with: URL(string: artistImageURL)!) { (data, response, error) in
             if let error = error {
@@ -258,7 +270,8 @@ class HomeCollectionViewController: UICollectionViewController, CLLocationManage
                 if response.statusCode == 200 {
                     Task {
                         if let artistImage = UIImage(data: data) {
-                            var textToShow = artistName + " " + String(artistCount) + "x"
+                            // Add text to the image showing the artist's name and frequency in the friend group
+                            let textToShow = artistName + " " + String(artistCount) + "x"
                             let imageWithText = self.textToImage(drawText: textToShow, inImage: artistImage, atPoint: CGPointMake(0, 10))
                             cell.backgroundView = UIImageView(image: imageWithText)
                         }

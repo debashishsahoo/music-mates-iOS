@@ -16,11 +16,14 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set the preferred configuration of the map to be hybrid
         mapView.preferredConfiguration = MKHybridMapConfiguration()
         
+        // Add the Annotation object passed to this controller by the relevant segue when the user selects another user in the Discover Friends page
         mapView.addAnnotation(annotation)
         mapView.selectAnnotation(annotation, animated: true)
         
+        // Zooms in and centers the map at the location of the annotation
         let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(zoomRegion, animated: true)
 

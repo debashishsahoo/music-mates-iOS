@@ -21,6 +21,7 @@ class FriendMusicTasteTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set the navigation bar title of the view to include the selected friend's name
         navigationItem.title = friendName! + "'s Artists"
     }
 
@@ -37,12 +38,13 @@ class FriendMusicTasteTableViewController: UITableViewController {
             return 1
         }
     }
-
+    
+    // Display the selected friend's favourite artists and the count
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_ARTISTS {
             let artistCell = tableView.dequeueReusableCell(withIdentifier: CELL_ARTIST, for: indexPath)
             var content = artistCell.defaultContentConfiguration()
-            content.text = friendArtistsList[indexPath.row]
+            content.text = "\(indexPath.row + 1)) \(friendArtistsList[indexPath.row])"            
             artistCell.contentConfiguration = content
             return artistCell
         } else {

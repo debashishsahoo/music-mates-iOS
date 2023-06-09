@@ -40,6 +40,55 @@ class RegisterViewController: UIViewController {
     
     @IBOutlet weak var checkBoxBtn: UIButton!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Get a reference to the database from the appDelegate
+        let appDelegate = (UIApplication.shared.delegate as? AppDelegate)
+        databaseController = appDelegate?.databaseController
+        
+        checkBoxBtn.setImage(uncheckedCheckBoxImage, for: UIControl.State.normal)
+        
+        authController = Auth.auth()
+        database = Firestore.firestore()
+        
+        firstNameTextField.attributedPlaceholder = NSAttributedString(
+            string: "First Name",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        
+        lastNameTextField.attributedPlaceholder = NSAttributedString(
+            string: "Last Name",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        
+        emailTextField.attributedPlaceholder = NSAttributedString(
+            string: "Enter a valid email address",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Create Password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        
+        confirmPasswordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Confirm Password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // Get a reference to the database from the appDelegate
+        authController = Auth.auth()
+        
+        do {
+            try authController?.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: \(signOutError)")
+        }
+    }
+    
     /// Toggles the check box for agreering to terms and conditions
     /// - Parameter sender: The checkbox button
     @IBAction func checkBoxBtnClicked(_ sender: UIButton) {
@@ -62,7 +111,7 @@ class RegisterViewController: UIViewController {
         let password = passwordTextField.text
         let confirmPassword = confirmPasswordTextField.text
         
-        // Save fields to user defaults temporarily in case spotify auth is cancelled
+        // Save fields to user defaults so that the user can be successfully registered  post-Spotify authentication, or in case spotify auth is cancelled and the user is brought back to the register page
         let userDefaults = UserDefaults.standard
         let tempDict = [
             "firstName": firstName,
@@ -178,12 +227,12 @@ class RegisterViewController: UIViewController {
         authController = Auth.auth()
         database = Firestore.firestore()
         
+        // Gets the registration info stored in user defaults that the user initially entered to complete registration post-Spotify authentication
         let userDefaults = UserDefaults.standard
         var strings: [String:String] = userDefaults.object(forKey: "tempDictKey") as? [String:String] ?? [:]
         
         Task {
             do {
-                print("Reached Here 1")
                 let authDataResult = try await authController!.createUser(withEmail: strings["email"]!, password: strings["password"]!)
                 currentUser = authDataResult.user
                 
@@ -209,15 +258,12 @@ class RegisterViewController: UIViewController {
                     "requestsReceived": [],
                     "registeredWithSpotify": true
                 ])
-                
-                print("Reached Here 2")
-                
+                                
                 // Delete the temp dict from user defaults
                 userDefaults.removeObject(forKey: "tempDictKey")
                 
                 // Change Root View Controller to the Tab Bar Controller
                 DispatchQueue.main.async {
-                    print("Reached Here 3")
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let TabBarController = storyboard.instantiateViewController(identifier: "TabBarController")
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(TabBarController)
@@ -226,55 +272,6 @@ class RegisterViewController: UIViewController {
             catch {
                 print("Firebase Authentication Failed with Error \(String(describing: error))")
             }
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Get a reference to the database from the appDelegate
-        let appDelegate = (UIApplication.shared.delegate as? AppDelegate)
-        databaseController = appDelegate?.databaseController
-        
-        checkBoxBtn.setImage(uncheckedCheckBoxImage, for: UIControl.State.normal)
-        
-        authController = Auth.auth()
-        database = Firestore.firestore()
-        
-        firstNameTextField.attributedPlaceholder = NSAttributedString(
-            string: "First Name",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
-        )
-        
-        lastNameTextField.attributedPlaceholder = NSAttributedString(
-            string: "Last Name",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
-        )
-        
-        emailTextField.attributedPlaceholder = NSAttributedString(
-            string: "Enter a valid email address",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
-        )
-        
-        passwordTextField.attributedPlaceholder = NSAttributedString(
-            string: "Create Password",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
-        )
-        
-        confirmPasswordTextField.attributedPlaceholder = NSAttributedString(
-            string: "Confirm Password",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
-        )
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        // Get a reference to the database from the appDelegate
-        authController = Auth.auth()
-        
-        do {
-            try authController?.signOut()
-        } catch let signOutError as NSError {
-            print("Error signing out: \(signOutError)")
         }
     }
     

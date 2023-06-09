@@ -1,102 +1,63 @@
-References for each file in the project
+REFERENCES & ACKNOWLEDGEMENT
+----------
 
-//
-//  FirebaseController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 3/5/2023.
-//
-//  References:
-//  "How to transition from login screen to tab bar controller": https://fluffy.es/how-to-transition-from-login-screen-to-tab-bar-controller/
+********** THIRD-PARTY LIBRARIES AND DATA SOURCES **********
+(Attribution and Details in the App's “About” Page)
 
-//
-//  LoginViewController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 30/4/2023.
-//
-//  References:
-//  "Manage Users in Firebase - Get the currently signed-in user" : https://firebase.google.com/docs/auth/ios/manage-users
-//  "How to validate an e-mail address in swift?" : https://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
+(1)    MessageKit: Used for implementing the chat messaging functionality
+•    https://messagekit.github.io
+•    https://github.com/MessageKit/MessageKit
 
-//
-//  RegisterViewController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 30/4/2023.
-//
-// "How to validate an e-mail address in swift?" : https://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
+(2)    Spotify Web API: Used to authenticate and retrieve data from a user’s Spotify account
+•    https://developer.spotify.com/documentation/web-api
+•    https://developer.spotify.com/terms
 
-//
-//  HomeCollectionViewController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 2/5/2023.
-//
-//  References:
-//  "Swift - How to hide back button in navigation item?": https://stackoverflow.com/questions/27373812/swift-how-to-hide-back-button-in-navigation-item
-//  "Swift - How to dismiss all of view controllers to go back to root": https://stackoverflow.com/questions/47322379/swift-how-to-dismiss-all-of-view-controllers-to-go-back-to-root
-//  "Sequencing tasks with DispatchGroup": https://www.donnywals.com/sequencing-tasks-with-dispatchgroup/
+********** EXTERNAL RESOURCES **********
 
-//
-//  SpotifyLoginViewController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 7/5/2023.
-//
-//  References:
-//  "Spotify For Developers: Web API": https://developer.spotify.com/documentation/web-api
-//  "How to add Spotify Login button to your iOS app using Swift": https://johncodeos.com/how-to-add-spotify-login-button-to-your-ios-app-using-swift/
-//  "ASWebAuthenticationSession": https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession
-//  "prefersEphemeralWebBrowserSession": https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession/3237231-prefersephemeralwebbrowsersessio
-//  "Defining a custom URL scheme for your app": https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app#
-//  "How to parse JSON using JSONSerialization": https://www.hackingwithswift.com/example-code/system/how-to-parse-json-using-jsonserialization
+(1)    "How to transition from login screen to tab bar controller": https://fluffy.es/how-to-transition-from-login-screen-to-tab-bar-controller/
 
-//
-//  FriendsTableViewController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 16/5/2023.
-//
-//  References:
-//  "UITableViewCell swipe actions with Swift": https://programmingwithswift.com/uitableviewcell-swipe-actions-with-swift/
-//  "Pull to refresh functionality": https://www.javatpoint.com/ios-pull-to-refresh-functionality
+•    Used in SceneDelegate.swift, LoginViewController.swift, and RegisterViewController.swift to switch to the main tab bar controller of the app upon user login
 
-//
-//  DiscoverTableViewController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 17/5/2023.
-//
-//  References:
-//  "UITableViewCell swipe actions with Swift": https://programmingwithswift.com/uitableviewcell-swipe-actions-with-swift/
-//  "Pull to refresh functionality": https://www.javatpoint.com/ios-pull-to-refresh-functionality
+(2)    "How do I add text to an image in iOS Swift?": https://stackoverflow.com/questions/28906914/how-do-i-add-text-to-an-image-in-ios-swift
 
-//
-//  RequestsTableViewController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 23/5/2023.
-//
-//  References:
-//  "UITableViewCell swipe actions with Swift": https://programmingwithswift.com/uitableviewcell-swipe-actions-with-swift/
+•    Used in HomeCollectionViewController.swift to add a text label to artist images that contains their name and frequency in the user's friend circle
 
-//
-//  ChatViewController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 29/5/2023.
-//
-//  References:
-//  "MessageKit": https://messagekit.github.io
-//  "MessageKit Github": https://github.com/MessageKit/MessageKit
-//  "3 Ways to Generate Random Strings in Swift": https://www.slingacademy.com/article/ways-to-generate-random-strings-in-swift/
+(3)    "How to validate an e-mail address in swift?" : https://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift
 
-//
-//  HomeCollectionViewController.swift
-//  MusicMates
-//
-//  Created by Debashish Sahoo on 2/5/2023.
-//
-//  References:
-//  "How do I add text to an image in iOS Swift?": https://stackoverflow.com/questions/28906914/how-do-i-add-text-to-an-image-in-ios-swift
+•    Used in LoginViewController.swift and RegisterViewController.swift to validate the email address entered by the user
+
+(4)    "How to add Spotify Login button to your iOS app using Swift": https://johncodeos.com/how-to-add-spotify-login-button-to-your-ios-app-using-swift/
+
+•    Used in SpotifyLoginViewController.swift to learn certain methods to retrieve information from Spotify's Web API
+
+(5)    "ASWebAuthenticationSession": https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession
+
+•    Used in SpotifyLoginViewController.swift to start a web authentication session on a separate page for authenticating the user's Spotify account
+
+(6)    "prefersEphemeralWebBrowserSession": https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession/3237231-prefersephemeralwebbrowsersessio
+
+•    Used in SpotifyLoginViewController.swift to open the Spotify web authentication session in the browser in private mode every time
+
+(7)    "Defining a custom URL scheme for your app": https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app#
+
+•    Used in SpotifyLoginViewController.swift to correctly define the URL scheme of my app project
+
+(8)    "How to parse JSON using JSONSerialization": https://www.hackingwithswift.com/example-code/system/how-to-parse-json-using-jsonserialization
+
+•    Used in SpotifyLoginViewController.swift to parse JSON data from Spotify's Web API as Codable wasn't usable due to escaping back slashes in the keys of the returned JSON data
+
+(9)    "UITableViewCell swipe actions with Swift": https://programmingwithswift.com/uitableviewcell-swipe-actions-with-swift/
+
+•    Used in FriendsTableViewController.swift, RequestsTableViewController.swift, and DiscoverTableViewController.swift to allow users to swipe to unfriend, accept/decline a friend request, and send/unsend a friend request respectively.
+
+(10)    "Pull to refresh functionality": https://www.javatpoint.com/ios-pull-to-refresh-functionality
+
+•    Used in FriendsTableViewController.swift, RequestsTableViewController.swift, and DiscoverTableViewController.swift to allow users to pull down to refresh the table data anytime they wish
+
+(11)    "3 Ways to Generate Random Strings in Swift": https://www.slingacademy.com/article/ways-to-generate-random-strings-in-swift/
+
+•    Used in ChatViewController.swift to generate a random ID for each chat message
+
+
+
+

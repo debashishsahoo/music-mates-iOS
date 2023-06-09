@@ -68,6 +68,7 @@ class ChatHomeTableViewController: UITableViewController {
         }
     }
     
+    // Display the user's chat channels and the count
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             if indexPath.section == SECTION_FRIENDS {
             let friendCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIEND, for: indexPath)
@@ -110,6 +111,7 @@ class ChatHomeTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Segue to the chat channel screen between the current user and the user selected
         if segue.identifier == "chatSegue" {
             if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
                 let controller = segue.destination as! ChatViewController

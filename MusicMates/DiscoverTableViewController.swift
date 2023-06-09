@@ -20,8 +20,9 @@ class DiscoverTableViewController: UITableViewController {
     let CELL_INFO = "infoCell"
     
     var friendsDistanceDict: [String: ([String: Any?], Double, String)] = [:]
-    var discoverFriendsList: [([String:Any?], String)] = []
     var friendsList: [String] = []
+    var discoverFriendsList: [([String:Any?], String)] = []
+    
     var currentUserLocation: CLLocationCoordinate2D?
     var currentUserFriends: Array<DocumentReference>?
     
@@ -29,9 +30,7 @@ class DiscoverTableViewController: UITableViewController {
         
     weak var databaseController: DatabaseProtocol?
     var authController: Auth?
-    
-    var mapViewController: MapViewController?
-    
+        
     let tabelRefreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
@@ -49,28 +48,33 @@ class DiscoverTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // Fetch all table data
         fetchAllData()
     }
     
     /// Refresh table data by swiping down
     @objc func refreshData() {
+        // Fetch all table data
         fetchAllData()
         tabelRefreshControl.endRefreshing()
     }
         
     /// Fetch table data
     func fetchAllData() {
-        friendsList = []
-        discoverFriendsList = []
-        getCurrentUserLocation()
-        getDiscoverFriendsData()
+        getCurrentUserLocation() { success in
+            self.friendsList = []
+            self.discoverFriendsList = []
+            self.getDiscoverFriendsData()
+        }
     }
     
     /// Get current user's location
-    func getCurrentUserLocation() {
+    func getCurrentUserLocation(completion: @escaping (_ success: Bool) -> Void) {
         databaseController?.getUserData(uid: (authController?.currentUser?.uid)!) { (userData) in
             let location = userData["location"] as! GeoPoint
             self.currentUserLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            let success = true
+            completion(success)
         }
     }
     
@@ -107,8 +111,9 @@ class DiscoverTableViewController: UITableViewController {
                                 let longitude = location.longitude
                                 
                                 let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                                
-                                let distance_from_current_user = round((MKMapPoint(self.currentUserLocation!).distance(to: MKMapPoint(coordinate))/1000) * 100) / 100.0
+ 
+                                // Calculate distance of the other user from the current user, round it, and convert it to kilometers
+                                let distance_from_current_user = round((CLLocation(latitude: self.currentUserLocation!.latitude, longitude: self.currentUserLocation!.longitude).distance(from: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))/1000) * 100) / 100.0
                                 
                                 let string = firstName + " " + lastName + " — \(String(distance_from_current_user)) km"
                                 self.friendsDistanceDict[user.documentID] = (userData, distance_from_current_user, string)  // Use a tuple for each value of the dict which also holds the string to append
@@ -189,8 +194,11 @@ class DiscoverTableViewController: UITableViewController {
         }
     }
     
+    // Get the index path of the row in which the accessory button (Detail) is clicked
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         accessoryBtnTappedIndexPath = indexPath
+        
+        // Perform segue to show the selected user's favorite artists list
         performSegue(withIdentifier: "friendArtistsSegue", sender: self)
     }
         
@@ -236,8 +244,8 @@ class DiscoverTableViewController: UITableViewController {
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Segue to a map showing the location of the selected user
         if segue.identifier == "mapSegue" {
              if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
                  let friendData = discoverFriendsList[indexPath.row].0
@@ -250,10 +258,13 @@ class DiscoverTableViewController: UITableViewController {
                  let longitude = friendLocation.longitude
                  
                  let controller = segue.destination as! MapViewController
+                 
+                 // Create a location annotation for the selected user to be displayed on the map
                  let annotation = LocationAnnotation(title: friendName, lat: latitude, long: longitude)
                  controller.annotation = annotation
              }
         } else if segue.identifier == "friendArtistsSegue" {
+            // Segue to the list of favourite artists for the particular friend clicked on
             let friendData = discoverFriendsList[accessoryBtnTappedIndexPath!.row].0
             let friendName = friendData["firstname"] as! String
             let friendFavArtists = friendData["favArtists"] as! [[String: String]]

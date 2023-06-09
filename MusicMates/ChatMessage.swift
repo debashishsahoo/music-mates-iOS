@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import MessageKit
 
+// Represents a chat message
 class ChatMessage: MessageType {
     var sender: SenderType
     var messageId: String

@@ -21,7 +21,8 @@ class SettingsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Instantiate the relevant settings to display
         generalSettingsList = ["About"]
         otherSettingsList = ["Log Out"]
     }
@@ -54,6 +55,7 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
+    // Display the settings
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
         var content = cell.defaultContentConfiguration()
@@ -72,10 +74,12 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == SECTION_GENERAL {
             if generalSettingsList[indexPath.row] == "About" {
+                // Segue to the About page of the app
                 performSegue(withIdentifier: "aboutSegue", sender: self)
             }
         } else if indexPath.section == SECTION_OTHER {
             if otherSettingsList[indexPath.row] == "Log Out" {
+                // Log the user out
                 handleLogOut()
             }
         }

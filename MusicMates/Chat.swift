@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Represents a chat channel between two users
 class Chat: NSObject {
     var users: [String]
 

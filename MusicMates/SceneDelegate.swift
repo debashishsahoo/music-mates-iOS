@@ -25,7 +25,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         authController = Auth.auth()
         let isLoggedIn = authController?.currentUser != nil
-//        let isLoggedin = UserDefaults.standard.bool(forKey: "isLoggedinKey")
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         

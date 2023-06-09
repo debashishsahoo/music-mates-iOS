@@ -40,11 +40,12 @@ class RequestsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        fetchAllData()
+        fetchAllData() // Fetch all table data
     }
 
     /// Refresh table data by swiping down
     @objc func refreshData() {
+        // Fetch all table data
         fetchAllData()
         tabelRefreshControl.endRefreshing()
     }
@@ -69,6 +70,7 @@ class RequestsTableViewController: UITableViewController {
         }
     }
 
+    // Display the user's friend requests and the count
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_REQUESTS {
             let requestCell = tableView.dequeueReusableCell(withIdentifier: CELL_REQUEST, for: indexPath)
@@ -109,7 +111,6 @@ class RequestsTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
     
@@ -149,8 +150,8 @@ class RequestsTableViewController: UITableViewController {
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Segue to the list of favourite artists for the particular friend clicked on
         if segue.identifier == "friendArtistsSegue" {
             if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
                 let friendData = requestsList[indexPath.row]

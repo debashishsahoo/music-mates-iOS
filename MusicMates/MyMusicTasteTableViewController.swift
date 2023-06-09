@@ -22,19 +22,12 @@ class MyMusicTasteTableViewController: UITableViewController {
     let tokenEndpointURLString = "https://accounts.spotify.com/api/token"
 
     let SECTION_ARTISTS = 0
-    
     let CELL_ARTIST = "artistCell"
     
     var artistsList: [[String: String]] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Get a reference to the database from the appDelegate
         let appDelegate = (UIApplication.shared.delegate as? AppDelegate)
@@ -141,6 +134,8 @@ class MyMusicTasteTableViewController: UITableViewController {
                                         "imageURL": artistImageURL
                                     ])
                                 }
+                                
+                                // Update the user's favorite artists list in Firebase
                                 self.databaseController?.updateUserData(uid: (self.authController?.currentUser!.uid)!, data: ["favArtists": self.artistsList])
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
@@ -180,7 +175,8 @@ class MyMusicTasteTableViewController: UITableViewController {
                 return 0
         }
     }
-
+    
+    // Display the user's favourite artists
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
         let artistCell = tableView.dequeueReusableCell(withIdentifier: CELL_ARTIST, for: indexPath)
         var content = artistCell.defaultContentConfiguration()

@@ -37,14 +37,17 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         
         database = Firestore.firestore()
         
+        // Set the current class as the delegate for several protocols used by the custom Collection View in MessageKit
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
         
+        // Move to the bottom of the list when typing and to maintain the current position when the keyboard frame is updated
         scrollsToLastItemOnKeyboardBeginsEditing = true
         maintainPositionOnInputBarHeightChanged = true
 
+        // Set the title of the view to the other user's name that the current user is chatting with
         navigationItem.title = otherUserName
         
         // Get all the chat messages

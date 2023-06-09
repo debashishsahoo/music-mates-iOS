@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 
+// Represents a location annotation on a map
 class LocationAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
