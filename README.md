@@ -14,8 +14,6 @@
 <img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/2a98f7ab-88d9-4f0c-9574-066a56474a6c">
 <img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/cca80b25-7f50-4c3a-8ae0-b049db4a810d">
 
-<br>
-
 <img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/4b7a3058-45cd-4e98-a106-663a4f8023cd">
 <img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/1d4d89ed-82b8-4036-a116-456d9472c58d">
 <img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/320aa654-f9a6-4e33-a5a8-c03550339178">
