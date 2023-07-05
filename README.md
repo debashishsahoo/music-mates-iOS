@@ -10,6 +10,7 @@
 - Offers both light mode and dark mode colors.
 
 <img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/9dda6c50-84b5-4695-b275-d42d0854b17c">
+<img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/7b8ab886-114d-4ef0-8d6a-2446652da735">
 <img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/41f0c03a-289f-4476-b17b-eac200c22939">
 <img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/2a98f7ab-88d9-4f0c-9574-066a56474a6c">
 <img width="207" height="450" src="https://github.com/debashishsahoo/music-mates-iOS/assets/69211573/cca80b25-7f50-4c3a-8ae0-b049db4a810d">
