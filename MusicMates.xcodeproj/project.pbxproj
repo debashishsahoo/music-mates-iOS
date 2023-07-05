@@ -31,7 +31,6 @@
 		3D80170F2A24E2BF004C592F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D80170E2A24E2BF004C592F /* MapViewController.swift */; };
 		3D8017112A264DBE004C592F /* LocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8017102A264DBE004C592F /* LocationAnnotation.swift */; };
 		3D8CC0DB2A078984000C7DD3 /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CC0DA2A078984000C7DD3 /* SpotifyLoginViewController.swift */; };
-		3D97F5EF2A23574600B72634 /* references.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3D97F5EE2A23574600B72634 /* references.txt */; };
 		3D9C0E2629FEB9E200607D9C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C0E2529FEB9E200607D9C /* RegisterViewController.swift */; };
 		3DA014E22A0119490040DD0F /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA014E12A0119490040DD0F /* HomeCollectionViewController.swift */; };
 		3DA014E52A0165BC0040DD0F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3DA014E42A0165BC0040DD0F /* FirebaseAuth */; };
@@ -69,7 +68,6 @@
 		3D80170E2A24E2BF004C592F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		3D8017102A264DBE004C592F /* LocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotation.swift; sourceTree = "<group>"; };
 		3D8CC0DA2A078984000C7DD3 /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
-		3D97F5EE2A23574600B72634 /* references.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = references.txt; sourceTree = "<group>"; };
 		3D97F5F02A23647B00B72634 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3D9C0E2529FEB9E200607D9C /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		3DA014E12A0119490040DD0F /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
@@ -134,7 +132,6 @@
 				3D5B66852A14C6110032AA58 /* DiscoverTableViewController.swift */,
 				3D5B66892A1BC1370032AA58 /* RequestsTableViewController.swift */,
 				3D15FCBE2A233FA800E4C546 /* ConstantsSecret.swift */,
-				3D97F5EE2A23574600B72634 /* references.txt */,
 				3D8017042A247B8C004C592F /* ChatViewController.swift */,
 				3D8017062A247C68004C592F /* Chat.swift */,
 				3D8017082A247C75004C592F /* Sender.swift */,
@@ -229,7 +226,6 @@
 				3D58F33829FEA63C00F682AB /* LaunchScreen.storyboard in Resources */,
 				3DA014ED2A016A360040DD0F /* GoogleService-Info.plist in Resources */,
 				3D58F33529FEA63C00F682AB /* Assets.xcassets in Resources */,
-				3D97F5EF2A23574600B72634 /* references.txt in Resources */,
 				3D58F33329FEA63800F682AB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
